@@ -5,11 +5,11 @@ import { knex } from '../database'
 
 export default async function usersRoutes(app: FastifyInstance) {
   app.post('/', async (request, response) => {
-    const createUserSchema = z.object({
+    const createNewUserBodySchema = z.object({
       nome: z.string(),
     })
 
-    const { nome } = createUserSchema.parse(request.body)
+    const { nome } = createNewUserBodySchema.parse(request.body)
 
     await knex('users').insert({
       id: randomUUID(),
