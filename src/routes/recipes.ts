@@ -22,4 +22,10 @@ export async function recipesRoutes(app: FastifyInstance) {
 
     response.status(201).send()
   })
+
+  app.get('/', async (request, response) => {
+    const allRecipes = await knex('recipes')
+
+    response.send({ allRecipes })
+  })
 }
