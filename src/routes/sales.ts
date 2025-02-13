@@ -121,4 +121,16 @@ export async function salesRoutes(app: FastifyInstance) {
 
     response.send({ paidSales })
   })
+
+  // busca vendas a pagar
+  app.get('/salesPayable', async (request, response) => {
+    const salesPayable = await knex('sales as s')
+      .join('users as u', 's.idUser', 'u.id')
+      .where('s.isPaidOrNot', false)
+      .select('u.name')
+      .sum('s.totalOfSale as total')
+      .groupBy('u.id')
+
+    response.send({ salesPayable })
+  })
 }
